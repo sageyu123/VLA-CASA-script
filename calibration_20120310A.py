@@ -70,17 +70,26 @@ if cal:
 
 #### delay calibration ####
     badspw = [0, 1, 2, 3, 4, 5, 6, 7]
-    badchannel = [[30, 89, 90, 91, 102], [117, 118], [54, 74, 81, 82], [], range(54,58)+range(97,112), [38, 42, 43], [], [28, 38, 80]]
+    badchannel = [\ # spw0
+	[30, 89, 90, 91, 102], \ #spw1
+	[117, 118],\
+	[54, 74, 81, 82],\
+	[],\
+	[13,14,22]+range(26,30)+[36,38]+range(54,58)+range(97,112),\
+	[38, 42, 43],\
+	[],\
+	[28, 38, 80]\
+	]
 
     def get_goodspw(badspw, badchannel):
        goodspw = []
        for s, chan in zip(badspw, badchannel):
            if len(chan) != 0:
-               spwstr = ['{}:{}~{}'.format(s, 4, chan[0])]
+               spwstr = ['{}:{}~{}'.format(s, 3, chan[0])]
                for ll, item in enumerate(chan):
                    if ll < len(chan) - 1 and item + 1 != chan[ll + 1]:
                        spwstr.append('{}~{}'.format(item + 1, chan[ll + 1]))
-               spwstr.append('{}~{}'.format(chan[-1] + 1, 123))
+               spwstr.append('{}~{}'.format(chan[-1] + 1, 124))
                goodspw.append('{}'.format(';'.join(spwstr)))
            else:
                goodspw.append('{}'.format(s))
